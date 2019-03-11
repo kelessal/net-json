@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Salih Keleş</Authors>
+    <Copyright>©2019 Salih Keleş</Copyright>
+    <PackageProjectUrl>https://github.com/kelessal/net-json</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/kelessal/net-json/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/kelessal/net-json</RepositoryUrl>
+    <PackageTags>json, serialization</PackageTags>
+    <Product>Net.Json.Serializer</Product>
+    <PackageId>Net.Json.Serializer</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
