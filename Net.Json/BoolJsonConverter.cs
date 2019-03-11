@@ -1,0 +1,34 @@
+﻿using Newtonsoft.Json;
+using System;
+
+namespace Net.Json
+{
+    public class BoolJsonConverter : JsonConverter
+    {
+        public static readonly BoolJsonConverter Default = new BoolJsonConverter();
+
+        static readonly Type BoolType = typeof(bool);
+
+        public override bool CanConvert(Type objectType) => objectType == BoolType;
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            try
+            {
+                var value = Convert.ToBoolean(reader.Value);
+                return value;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public override bool CanWrite => false;
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException("Unnecessary because CanWrite is false. The type will skip the converter.");
+        }
+    }
+}
