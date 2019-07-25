@@ -13,6 +13,10 @@ namespace Net.Json
                                                  , MemberSerialization memberSerialization)
         {
             var prop = base.CreateProperty(member, memberSerialization);
+            if (prop.PropertyName == "_id")
+            {
+                prop.PropertyName = "id";
+            }
             if (member.ReflectedType.IsInterface && !member.ReflectedType.IsCollectionType())
             {
                 prop.Converter = ConcreteConverter.Default;
