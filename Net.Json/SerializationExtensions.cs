@@ -29,10 +29,22 @@ namespace Net.Json
             return result;
         }
         static JsonSerializerSettings DefaultSettings = CreateDefaultSettings();
-        public static string Serialize(this object item)
+        static JsonSerializerSettings IndentedSettings = CreateIndentedSettings();
+
+        private static JsonSerializerSettings CreateIndentedSettings()
+        {
+            var settings = CreateDefaultSettings();
+            settings.Formatting = Formatting.Indented;
+            return settings;
+        }
+
+        public static string Serialize(this object item,bool indent=false)
         {
             if (item == null) return string.Empty;
-           return JsonConvert.SerializeObject(item, DefaultSettings);
+           var result= JsonConvert.SerializeObject(item,indent?
+               IndentedSettings: DefaultSettings);
+            return result;
+
         }
         public static T Deserialize<T>(this string serializationText)
             => (T)Deserialize(serializationText, typeof(T));

@@ -15,5 +15,16 @@ namespace Net.Json.Test
             };
             var result = obj.Serialize();
         }
+        [Fact]
+        public void IndentSerialize()
+        {
+            var obj = new
+            {
+                _id = "Hello",
+                Name = "World"
+            };
+            var result = obj.Serialize(true);
+        }
+
     }
 }
