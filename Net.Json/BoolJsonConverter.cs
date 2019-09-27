@@ -7,9 +7,8 @@ namespace Net.Json
     {
         public static readonly BoolJsonConverter Default = new BoolJsonConverter();
 
-        static readonly Type BoolType = typeof(bool);
 
-        public override bool CanConvert(Type objectType) => objectType == BoolType;
+        public override bool CanConvert(Type objectType) => objectType == typeof(bool);
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {

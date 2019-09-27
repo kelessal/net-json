@@ -24,7 +24,7 @@ namespace Net.Json
                         TimeSpanJsonConverter.Default
 
                     },
-                ContractResolver = new DynamicContractResolver()
+                ContractResolver = new DynamicContractResolver(),
             };
             return result;
         }

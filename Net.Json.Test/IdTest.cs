@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using Xunit;
 
 namespace Net.Json.Test
@@ -8,12 +9,10 @@ namespace Net.Json.Test
         [Fact]
         public void Test1()
         {
-            var obj = new
-            {
-                _id = "Hello",
-                Name = "World"
-            };
-            var result = obj.Serialize();
+            dynamic obj = new ExpandoObject();
+            obj._id = "Hello";
+            obj.Name = "World";
+            var result = SerializationExtensions.Serialize(obj);
         }
         [Fact]
         public void IndentSerialize()

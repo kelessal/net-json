@@ -1,6 +1,7 @@
 ﻿using Net.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -8,7 +9,11 @@ namespace Net.Json
 {
     public class DynamicContractResolver : CamelCasePropertyNamesContractResolver
     {
-      
+
+        protected override string ResolveDictionaryKey(string dictionaryKey)
+        {
+            return dictionaryKey=="_id"?"id":base.ResolveDictionaryKey(dictionaryKey);
+        }
         protected override JsonProperty CreateProperty(MemberInfo member
                                                  , MemberSerialization memberSerialization)
         {
