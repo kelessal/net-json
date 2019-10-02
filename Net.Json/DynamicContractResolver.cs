@@ -1,4 +1,5 @@
-﻿using Net.Reflection;
+﻿using Net.Extensions;
+using Net.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -21,6 +22,9 @@ namespace Net.Json
             if (prop.PropertyName == "_id")
             {
                 prop.PropertyName = "id";
+            } else
+            {
+                prop.PropertyName = member.Name.ToLowerFirstLetter();
             }
             if (member.ReflectedType.IsInterface && !member.ReflectedType.IsCollectionType())
             {

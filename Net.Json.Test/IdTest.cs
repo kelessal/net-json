@@ -20,7 +20,7 @@ namespace Net.Json.Test
             var obj = new
             {
                 _id = "Hello",
-                Name = "World"
+                GIRIS_TARIHI = "World"
             };
             var result = obj.Serialize(true);
         }
