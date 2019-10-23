@@ -13,7 +13,12 @@ namespace Net.Json
 
         protected override string ResolveDictionaryKey(string dictionaryKey)
         {
-            return dictionaryKey=="_id"?"id":base.ResolveDictionaryKey(dictionaryKey);
+            return dictionaryKey == "_id" ? "id" : dictionaryKey.ToLowerFirstLetter(isInvariant: true);
+        }
+     
+        protected override string ResolvePropertyName(string propertyName)
+        {
+            return propertyName.ToLowerFirstLetter(isInvariant:true);
         }
         protected override JsonProperty CreateProperty(MemberInfo member
                                                  , MemberSerialization memberSerialization)
@@ -24,7 +29,7 @@ namespace Net.Json
                 prop.PropertyName = "id";
             } else
             {
-                prop.PropertyName = member.Name.ToLowerFirstLetter();
+                prop.PropertyName = member.Name.ToLowerFirstLetter(isInvariant:true);
             }
             if (member.ReflectedType.IsInterface && !member.ReflectedType.IsCollectionType())
             {

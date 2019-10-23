@@ -15,6 +15,18 @@ namespace Net.Json.Test
             var result = SerializationExtensions.Serialize(obj);
         }
         [Fact]
+        public void TestCamelCase()
+        {
+            var obj = new
+            {
+                BOLGE_ADI="ANTALYA",
+                CIKIS_TARIHI="123"
+            };
+            var result = SerializationExtensions.Serialize(obj);
+            var r2 = SerializationExtensions.Deserialize(result,obj.GetType());
+        }
+
+        [Fact]
         public void IndentSerialize()
         {
             var obj = new
