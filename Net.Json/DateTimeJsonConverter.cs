@@ -9,19 +9,37 @@ namespace Net.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(DateTime);
+            return objectType == typeof(DateTime) ;
         }
 
-        public override bool CanWrite => false;
+        public override bool CanWrite => true;
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value ?? DateTime.UtcNow;
+            if (reader.Value == null) return DateTime.MinValue;
+            if(reader.ValueType==typeof(string))
+            {
+                if (DateTime.TryParse(reader.Value as string, out DateTime result)) return result;
+                return DateTime.MinValue;
+            }
+            var val = Convert.ToInt64(reader.Value);
+            var netticks = 10000 * val + 621355968000000000;
+            netticks = Math.Max(DateTime.MinValue.Ticks, netticks);
+            netticks = Math.Min(DateTime.MaxValue.Ticks, netticks);
+            return new DateTime(netticks,DateTimeKind.Unspecified);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("Unnecessary because CanWrite is false. The type will skip the converter.");
+            if(value is DateTime t)
+            {
+                var jsonticks = t.Ticks - 621355968000000000;
+                jsonticks = jsonticks / 10000;
+                writer.WriteValue(jsonticks);
+            } else
+            {
+                writer.WriteNull();
+            }
         }
     }
 }

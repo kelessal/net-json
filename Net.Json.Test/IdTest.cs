@@ -25,6 +25,13 @@ namespace Net.Json.Test
             var result = SerializationExtensions.Serialize(obj);
             var r2 = SerializationExtensions.Deserialize(result,obj.GetType());
         }
+        [Fact]
+        public void TestArray()
+        {
+            var obj = new[] { 1, 2, 3 };
+            var result = SerializationExtensions.Serialize(obj);
+            var r2 = SerializationExtensions.Deserialize(result, obj.GetType());
+        }
 
         [Fact]
         public void IndentSerialize()
@@ -35,6 +42,22 @@ namespace Net.Json.Test
                 GIRIS_TARIHI = "World"
             };
             var result = obj.Serialize(true);
+        }
+        [Fact]
+        public void TestDateTime()
+        {
+            var obj1 = new
+            {
+                _id = "Hello",
+                GIRIS_TARIHI = DateTime.Now.ToString()
+            };
+            var obj2 = new
+            {
+                _id = "Hello",
+                GIRIS_TARIHI = DateTime.Now
+            };
+            var result = obj1.Serialize(true);
+            var deserialized = result.Deserialize(obj2.GetType());
         }
 
     }
