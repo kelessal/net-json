@@ -9,19 +9,43 @@ namespace Net.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(TimeSpan);
+            return objectType == typeof(TimeSpan) || objectType==typeof(TimeSpan?);
         }
 
-        public override bool CanWrite => false;
+        public override bool CanWrite => true;
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value == null ? new TimeSpan() : TimeSpan.Parse(reader.Value as string);
+            if (reader.Value == null)
+            {
+                if (objectType == typeof(TimeSpan)) return TimeSpan.MinValue;
+                return null;
+            }
+            if (reader.ValueType == typeof(string))
+            {
+
+                if (TimeSpan.TryParse(reader.Value as string, out TimeSpan result)) return result;
+                if( objectType==typeof(TimeSpan)) return TimeSpan.MinValue;
+                return null;
+            }
+            var val = Convert.ToInt64(reader.Value);
+            var netticks = 10000 * val ;
+            netticks = Math.Min(TimeSpan.MaxValue.Ticks, netticks);
+            netticks = Math.Max(TimeSpan.MinValue.Ticks, netticks);
+            return new TimeSpan(netticks);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("Unnecessary because CanWrite is false. The type will skip the converter.");
+            if (value is TimeSpan t)
+            {
+                var jsonticks = t.Ticks/10000;
+                writer.WriteValue(jsonticks);
+            }
+            else
+            {
+                writer.WriteNull();
+            }
         }
     }
 }

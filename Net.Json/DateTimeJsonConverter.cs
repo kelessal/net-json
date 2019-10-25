@@ -19,12 +19,13 @@ namespace Net.Json
             if (reader.Value == null)
             {
                 if (objectType == typeof(DateTime)) return DateTime.MinValue;
-                return (DateTime?) null;
+                return  null;
             }
             if(reader.ValueType==typeof(string))
             {
                 if (DateTime.TryParse(reader.Value as string, out DateTime result)) return result;
-                return DateTime.MinValue;
+                if(objectType==typeof(DateTime)) return DateTime.MinValue;
+                return null;
             }
             var val = Convert.ToInt64(reader.Value);
             var netticks = 10000 * val + 621355968000000000;
@@ -35,6 +36,7 @@ namespace Net.Json
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+
             if(value is DateTime t)
             {
                 var jsonticks = t.Ticks - 621355968000000000;
