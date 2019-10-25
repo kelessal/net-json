@@ -49,15 +49,11 @@ namespace Net.Json.Test
             var obj1 = new
             {
                 _id = "Hello",
-                GIRIS_TARIHI = DateTime.Now.ToString()
+                GIRIS_TARIHI =(DateTime?) null
             };
-            var obj2 = new
-            {
-                _id = "Hello",
-                GIRIS_TARIHI = DateTime.Now
-            };
+          
             var result = obj1.Serialize(true);
-            var deserialized = result.Deserialize(obj2.GetType());
+            var deserialized = result.Deserialize(obj1.GetType());
         }
 
     }

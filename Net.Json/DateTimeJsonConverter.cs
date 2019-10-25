@@ -9,14 +9,18 @@ namespace Net.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(DateTime) ;
+            return objectType == typeof(DateTime) || objectType==typeof(DateTime?) ;
         }
 
         public override bool CanWrite => true;
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.Value == null) return DateTime.MinValue;
+            if (reader.Value == null)
+            {
+                if (objectType == typeof(DateTime)) return DateTime.MinValue;
+                return (DateTime?) null;
+            }
             if(reader.ValueType==typeof(string))
             {
                 if (DateTime.TryParse(reader.Value as string, out DateTime result)) return result;
