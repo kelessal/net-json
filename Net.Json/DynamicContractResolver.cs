@@ -13,7 +13,7 @@ namespace Net.Json
 
         protected override string ResolveDictionaryKey(string dictionaryKey)
         {
-            return dictionaryKey == "_id" ? "id" : base.ResolveDictionaryKey(dictionaryKey);
+            return dictionaryKey == "_id" ? "id" : dictionaryKey.ToLowerFirstLetter(isInvariant: true);
         }
      
         protected override string ResolvePropertyName(string propertyName)
