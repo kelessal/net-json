@@ -46,6 +46,7 @@ namespace Net.Json.Test
         [Fact]
         public void TestDateTime()
         {
+
             var obj1 = new
             {
                 _id = "Hello",
@@ -53,7 +54,7 @@ namespace Net.Json.Test
             };
           
             var result = obj1.Serialize(true);
-            var deserialized = result.Deserialize(obj1.GetType());
+            var deserialized = "{GIRIS_TARIHI:23435}".Deserialize(obj1.GetType());
         }
 
     }

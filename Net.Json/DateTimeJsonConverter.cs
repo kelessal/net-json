@@ -27,6 +27,7 @@ namespace Net.Json
                 if(objectType==typeof(DateTime)) return DateTime.MinValue;
                 return null;
             }
+            if (reader.ValueType == typeof(DateTime)) return reader.Value;
             var val = Convert.ToInt64(reader.Value);
             var netticks = 10000 * val + 621355968000000000;
             netticks = Math.Max(DateTime.MinValue.Ticks, netticks);
