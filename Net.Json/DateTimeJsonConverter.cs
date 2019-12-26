@@ -32,7 +32,7 @@ namespace Net.Json
             var netticks = 10000 * val + 621355968000000000;
             netticks = Math.Max(DateTime.MinValue.Ticks, netticks);
             netticks = Math.Min(DateTime.MaxValue.Ticks, netticks);
-            return new DateTime(netticks,DateTimeKind.Unspecified);
+            return new DateTime(netticks,DateTimeKind.Utc).ToLocalTime();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -40,7 +40,7 @@ namespace Net.Json
 
             if(value is DateTime t)
             {
-                var jsonticks = t.Ticks - 621355968000000000;
+                var jsonticks = t.ToUniversalTime().Ticks - 621355968000000000;
                 jsonticks = jsonticks / 10000;
                 writer.WriteValue(jsonticks);
             } else

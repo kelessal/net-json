@@ -44,18 +44,29 @@ namespace Net.Json.Test
             var result = obj.Serialize(true);
         }
         [Fact]
-        public void TestDateTime()
+        public void TestTimeSpan()
         {
-
+            var x= new TimeSpan(23,59,0);
+            var result2=x.Ticks;
             var obj1 = new
             {
                 _id = "Hello",
-                GIRIS_TARIHI =(DateTime?) null
+                GIRIS_TARIHI =x
             };
           
             var result = obj1.Serialize(true);
-            var deserialized = "{GIRIS_TARIHI:23435}".Deserialize(obj1.GetType());
+            var deserialized = "{GIRIS_TARIHI:68760000}".Deserialize(obj1.GetType());
         }
+        [Fact]
+        public void TestDateTime()
+        {
+            var x = DateTime.UtcNow;
+
+            var y = x.Serialize();
+            var z = y.Deserialize<DateTime>().ToUniversalTime();
+            Assert.Equal(x.Ticks,z.Ticks);
+        }
+
 
     }
 }
