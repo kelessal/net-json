@@ -6,7 +6,6 @@ namespace Net.Json
     public class DateTimeJsonConverter : JsonConverter
     {
         public static readonly DateTimeJsonConverter Default = new DateTimeJsonConverter();
-        static DateTime MinDate = new DateTime(1902, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(DateTime) || objectType==typeof(DateTime?) ;
@@ -18,19 +17,19 @@ namespace Net.Json
         {
             if (reader.Value == null)
             {
-                if (objectType == typeof(DateTime)) return MinDate;
+                if (objectType == typeof(DateTime)) return DateTime.MinValue;
                 return  null;
             }
             if(reader.ValueType==typeof(string))
             {
                 if (DateTime.TryParse(reader.Value as string, out DateTime result)) return result;
-                if(objectType==typeof(DateTime)) return MinDate;
+                if(objectType==typeof(DateTime)) return DateTime.MinValue;
                 return null;
             }
             if (reader.ValueType == typeof(DateTime)) return reader.Value;
             var val = Convert.ToInt64(reader.Value);
             var netticks = 10000 * val + 621355968000000000;
-            netticks = Math.Max(MinDate.Ticks, netticks);
+            netticks = Math.Max(DateTime.MinValue.Ticks, netticks);
             netticks = Math.Min(DateTime.MaxValue.Ticks, netticks);
             return new DateTime(netticks,DateTimeKind.Utc).ToLocalTime();
         }
