@@ -16,7 +16,6 @@ namespace Net.Json
                     {
                         BoolJsonConverter.Default,
                         ConcreteConverter.Default,
-                        DateTimeJsonConverter.Default,
                         EnumJsonConverter.Default,
                         ExpressionJsonConverter.Default,
                         NumberJsonConverter.Default,
