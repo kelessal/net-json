@@ -63,10 +63,17 @@ namespace Net.Json.Test
             var x = DateTime.UtcNow;
 
             var y = x.Serialize();
-            var z = y.Deserialize<DateTime>().ToUniversalTime();
+            var z = "1234323432432".Deserialize<DateTime>().ToUniversalTime();
             Assert.Equal(x.Ticks,z.Ticks);
         }
 
+        [Fact]
+        public void ExpandoTest()
+        {
+            var x = new[] { "anv" };
+
+            var y = x.AsExpandoObject();
+        }
 
     }
 }

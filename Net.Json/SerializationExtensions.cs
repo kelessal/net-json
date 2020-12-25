@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Net.Json
 {
@@ -14,6 +15,7 @@ namespace Net.Json
                 Formatting = Formatting.None,
                 Converters = new List<JsonConverter>()
                     {
+                        DateTimeJsonConverter.Default,
                         BoolJsonConverter.Default,
                         ConcreteConverter.Default,
                         EnumJsonConverter.Default,
@@ -51,6 +53,12 @@ namespace Net.Json
         {
             if (serializationText.IsEmpty()) return null;
             return JsonConvert.DeserializeObject(serializationText,deserializeType, DefaultSettings);
+        }
+        public static ExpandoObject AsExpandoObject(this object obj)
+        {
+            if (obj.IsNull()) return default;
+            if (obj is ExpandoObject expobj) return expobj;
+            return obj.Serialize().Deserialize<ExpandoObject>();
         }
     }
 }
