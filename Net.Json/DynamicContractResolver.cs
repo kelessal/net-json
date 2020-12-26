@@ -10,26 +10,33 @@ namespace Net.Json
 {
     public class DynamicContractResolver : CamelCasePropertyNamesContractResolver
     {
-
+        public bool LowerFirstLetter { get; set; } = true;
+        public bool MongoIdConversion { get; set; } = true;
         protected override string ResolveDictionaryKey(string dictionaryKey)
         {
-            return dictionaryKey == "_id" ? "id" : dictionaryKey.ToLowerFirstLetter(isInvariant: true);
+            dictionaryKey = LowerFirstLetter ? dictionaryKey.ToLowerInvariant() : dictionaryKey;
+            if (MongoIdConversion && dictionaryKey == "_id") return "id";
+            return dictionaryKey;
         }
      
         protected override string ResolvePropertyName(string propertyName)
         {
-            return propertyName.ToLowerFirstLetter(isInvariant:true);
+            return LowerFirstLetter
+                ?propertyName.ToLowerFirstLetter(isInvariant:true)
+                :propertyName;
         }
         protected override JsonProperty CreateProperty(MemberInfo member
                                                  , MemberSerialization memberSerialization)
         {
             var prop = base.CreateProperty(member, memberSerialization);
-            if (prop.PropertyName == "_id")
+            if (MongoIdConversion &&  prop.PropertyName == "_id")
             {
                 prop.PropertyName = "id";
             } else
             {
-                prop.PropertyName = member.Name.ToLowerFirstLetter(isInvariant:true);
+                prop.PropertyName = LowerFirstLetter
+                    ?member.Name.ToLowerFirstLetter(isInvariant:true)
+                    :member.Name;
             }
             if (member.ReflectedType.IsInterface && !member.ReflectedType.IsCollectionType())
             {

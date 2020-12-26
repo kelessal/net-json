@@ -1,6 +1,7 @@
 ﻿using Net.Extensions;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 
@@ -29,14 +30,29 @@ namespace Net.Json
             };
             return result;
         }
-        static JsonSerializerSettings DefaultSettings = CreateDefaultSettings();
-        static JsonSerializerSettings IndentedSettings = CreateIndentedSettings();
+        static JsonSerializerSettings _DefaultSettings = CreateDefaultSettings();
+        static JsonSerializerSettings _IndentedSettings = CreateIndentedSettings();
+        public static JsonSerializerSettings DefaultSettings
+        {
+            get { return _DefaultSettings; }
+            set
+            {
+                if (value.IsNull()) throw new Exception("Json serializer settings must not be null");
+                _DefaultSettings = value;
+                _IndentedSettings = CreateIndentedSettings();
+            }
+        }
+        static JsonSerializerSettings IndentedSettings { get; set; }= CreateIndentedSettings();
 
         private static JsonSerializerSettings CreateIndentedSettings()
         {
-            var settings = CreateDefaultSettings();
-            settings.Formatting = Formatting.Indented;
-            return settings;
+            var result = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                Converters = _DefaultSettings.Converters,
+                ContractResolver = _DefaultSettings.ContractResolver,
+            };
+            return result;
         }
 
         public static string Serialize(this object item,bool indent=false)
@@ -56,8 +72,11 @@ namespace Net.Json
         }
         public static ExpandoObject AsExpandoObject(this object obj)
         {
-            if (obj.IsNull()) return default;
+            if (obj.IsNull()) return new ExpandoObject();
             if (obj is ExpandoObject expobj) return expobj;
+            if (obj is IEnumerable) return new ExpandoObject();
+            var type = obj.GetType();
+            if (type.IsValueType) return new ExpandoObject();
             return obj.Serialize().Deserialize<ExpandoObject>();
         }
     }
