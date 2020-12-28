@@ -11,7 +11,7 @@ namespace Net.Json.Test
         {
             dynamic obj = new ExpandoObject();
             obj._id = "Hello";
-            obj.Name = "World";
+            obj.NameList = "World";
             var result = SerializationExtensions.Serialize(obj);
         }
         [Fact]

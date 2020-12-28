@@ -13,7 +13,7 @@ namespace Net.Json
         public bool MongoIdConversion { get; set; } = true;
         protected override string ResolveDictionaryKey(string dictionaryKey)
         {
-            dictionaryKey = LowerFirstLetter ? dictionaryKey.ToLowerInvariant() : dictionaryKey;
+            dictionaryKey = LowerFirstLetter ? dictionaryKey.ToLowerFirstLetter(isInvariant:true) : dictionaryKey;
             if (MongoIdConversion && dictionaryKey == "_id") return "id";
             return dictionaryKey;
         }
