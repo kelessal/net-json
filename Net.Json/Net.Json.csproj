@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Salih Keleş</Authors>
     <Copyright>©2019 Salih Keleş</Copyright>
     <PackageProjectUrl>https://github.com/kelessal/net-json</PackageProjectUrl>
@@ -10,7 +10,7 @@
     <PackageTags>json, serialization</PackageTags>
     <Product>Net.Json.Serializer</Product>
     <PackageId>Net.Json.Serializer</PackageId>
-    <Version>1.7.1</Version>
+    <Version>1.7.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
