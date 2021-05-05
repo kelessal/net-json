@@ -27,7 +27,8 @@ namespace Net.Json
 
                     },
                 ContractResolver = new DynamicContractResolver(),
-            };
+               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+           };
             return result;
         }
         static JsonSerializerSettings _DefaultSettings = CreateDefaultSettings();

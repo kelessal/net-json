@@ -14,6 +14,15 @@ namespace Net.Json.Test
             obj.NameList = "World";
             var result = SerializationExtensions.Serialize(obj);
         }
+
+        [Fact]
+        public void LoopTest()
+        {
+            var loop = new LoopTestObj();
+            loop.LoopProp = loop;
+            loop.Name = "test";
+            var result = SerializationExtensions.Serialize(loop);
+        }
         [Fact]
         public void TestCamelCase()
         {
