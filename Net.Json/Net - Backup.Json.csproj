@@ -10,7 +10,7 @@
     <PackageTags>json, serialization</PackageTags>
     <Product>Net.Json.Serializer</Product>
     <PackageId>Net.Json.Serializer</PackageId>
-    <Version>4.1</Version>
+    <Version>4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
