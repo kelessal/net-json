@@ -10,12 +10,12 @@
     <PackageTags>json, serialization</PackageTags>
     <Product>Net.Json.Serializer</Product>
     <PackageId>Net.Json.Serializer</PackageId>
-    <Version>3.5</Version>
+    <Version>4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Net.Extensions" Version="2.0.0" />
-    <PackageReference Include="Net.Proxy" Version="3.5.0" />
+    <PackageReference Include="Net.Proxy" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serialize.Linq" Version="2.0.0" />
   </ItemGroup>
