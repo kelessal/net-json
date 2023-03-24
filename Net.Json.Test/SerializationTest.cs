@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Net.Proxy;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq.Expressions;
 using System.Text;
 using Xunit;
 
@@ -11,6 +13,11 @@ namespace Net.Json.Test
         [Fact]
         public void SerializeObjectTest()
         {
+            var x = InterfaceType.NewProxy<IRequestInfo>();
+            Expression<Func<IRequestInfo, bool>> exp = p => p.AppId == "123";
+            var serialized=exp.Serialize();
+            var desexp=serialized.Deserialize<Expression<Func<IRequestInfo, bool>>>();
+
             var obj = new
             {
                 Property1 = "Property 1",
